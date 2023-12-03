@@ -34,3 +34,10 @@ PicoVision> repl
 # list available modules
 >>> help('modules')
 ```
+
+## Upload files
+
+```shell
+# upload specific file
+$ rshell -p /dev/cu.usbmodem14301 cp pong.py /pyboard/pong.py
+```

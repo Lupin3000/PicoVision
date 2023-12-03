@@ -6,14 +6,23 @@ from urandom import randrange
 SCREEN_WIDTH = const(320)
 SCREEN_HEIGHT = const(240)
 PADDLE_SPEED = const(5)
-COLLISION_TOLERANCE = 5
+COLLISION_TOLERANCE = const(5)
 
 
 class Field:
     def __init__(self, screen):
+        """
+        field constructor
+        :param screen: display
+        """
         self._display = screen
 
     def draw(self, fails: int = 0) -> None:
+        """
+        draw game field on display
+        :param fails: integer for fails
+        :return: None
+        """
         self._display.set_pen(WHITE)
         self._display.text(f'Fails {fails}', 25, 15, scale=1)
         self._display.line(25, 25, SCREEN_WIDTH - 25, 25)
@@ -24,6 +33,10 @@ class Field:
 
 class Paddle:
     def __init__(self, screen):
+        """
+        paddle constructor
+        :param screen: display
+        """
         self._display = screen
         self.width = 5
         self.height = 20
@@ -31,6 +44,10 @@ class Paddle:
         self.pos_y = SCREEN_HEIGHT // 2
 
     def handle_input(self) -> None:
+        """
+        move and draw paddle on display
+        :return: None
+        """
         button_up = self._display.is_button_a_pressed
         button_down = self._display.is_button_x_pressed
 
@@ -46,6 +63,10 @@ class Paddle:
 
 class Ball:
     def __init__(self, screen):
+        """
+        ball constructor
+        :param screen: display
+        """
         self._display = screen
         self.radius = 5
         self.pos_x = SCREEN_WIDTH // 2
@@ -54,6 +75,10 @@ class Ball:
         self.speed_y = -1 if randrange(2) else 1
 
     def draw(self) -> None:
+        """
+        draw ball on display
+        :return: None
+        """
         self.pos_x += self.speed_x
         self.pos_y += self.speed_y
 
@@ -61,7 +86,13 @@ class Ball:
         self._display.circle(self.pos_x, self.pos_y, self.radius)
 
 
-def check_collision(circle: list, rectangle: list):
+def check_collision(circle: list, rectangle: list) -> bool:
+    """
+    check overlap of circle and rectangle
+    :param circle: list with values for radius, x position, y position
+    :param rectangle: list with values for x position, y position, width, height
+    :return: bool
+    """
     circle_radius, circle_x, circle_y = circle
     rect_x, rect_y, rect_width, rect_height = rectangle
 
