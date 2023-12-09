@@ -1,6 +1,7 @@
 from micropython import const
 from picovision import PicoVision, PEN_RGB555
 from pimoroni import Button
+import gc
 
 
 SCREEN_WIDTH = const(320)
@@ -15,9 +16,9 @@ class Interface:
         :param icon: gun icon as list
         """
         self._display = screen
+        self._icon = list(icon)
         self.score = 0
         self.lives = 3
-        self._icon = list(icon)
 
     def draw(self) -> None:
         """
@@ -33,6 +34,7 @@ class Interface:
 
         score_icon_pos_x = 260
         score_icon_pos_y = 6
+
         for _ in range(self.lives):
             for y, row in enumerate(self._icon):
                 for x, c in enumerate(row):
@@ -43,7 +45,7 @@ class Interface:
 
 class Enemy:
 
-    ENEMY_SPEED = const(2)
+    ENEMY_DOWN_SPEED = const(5)
 
     def __init__(self, screen, x: int, y: int):
         """
@@ -65,6 +67,7 @@ class Enemy:
             [0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0]
         ]
 
+        self.enemy_speed = 2
         self.enemy_pos_x = int(x)
         self.enemy_pos_y = int(y)
 
@@ -76,13 +79,13 @@ class Enemy:
         :return: None
         """
         if direction == "left":
-            self.enemy_pos_x -= self.ENEMY_SPEED
+            self.enemy_pos_x -= self.enemy_speed
 
         if direction == "right":
-            self.enemy_pos_x += self.ENEMY_SPEED
+            self.enemy_pos_x += self.enemy_speed
 
         if down:
-            self.enemy_pos_y += self.ENEMY_SPEED * 2
+            self.enemy_pos_y += self.ENEMY_DOWN_SPEED
 
         self._display.set_pen(WHITE)
 
@@ -158,6 +161,7 @@ def reset_enemies() -> None:
     """
     global enemies
 
+    enemies.clear()
     enemy_add = 15
     enemy_start_x = 100
     enemy_start_y = 20
@@ -243,7 +247,6 @@ while True:
                 gun.bullet_state = "ready"
 
         if enemy.enemy_pos_y > SCREEN_HEIGHT - 20:
-            enemies.clear()
             interface.lives -= 1
             reset_enemies()
 
@@ -256,6 +259,7 @@ while True:
     gun.handle_input()
 
     display.update()
+    gc.collect()
 
 # game over
 display.set_pen(WHITE)
