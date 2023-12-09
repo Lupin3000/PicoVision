@@ -141,6 +141,12 @@ class Gun:
 
 
 def collision_check(point: list, rectangle: list) -> bool:
+    """
+    check whether a point is inside a rectangular
+    :param point: list of x,y position coordinates
+    :param rectangle: list of x,y position coordinates
+    :return: bool
+    """
     point_x, point_y = point
     rect_x1, rect_y1 = rectangle
     rect_x2 = rect_x1 + 10
