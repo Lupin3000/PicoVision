@@ -2,7 +2,16 @@
 
 ## PicoVision repository
 
-[Pimoroni/PicoVision](https://github.com/pimoroni/picovision#introduction)
+If you start the first time have a look on this [website](https://learn.pimoroni.com/article/getting-started-with-picovision)! The original firmware and examples are available on [GitHub](https://github.com/pimoroni/picovision#introduction).
+
+## Requirements
+
+- Python 3.x installed
+- 1x PicoVision (_[Pimoroni Shop](https://shop.pimoroni.com/products/picovision)_)
+- 1x HDMI cable
+- 1x Monitor
+- 1x USB cable (_USB A or USB C to Micro USB_)
+- optional speaker (_3.5mm stereo jack_)
 
 ## Prepare local environment
 
