@@ -68,11 +68,22 @@ class Enemy:
         self.enemy_pos_x = int(x)
         self.enemy_pos_y = int(y)
 
-    def draw(self) -> None:
+    def draw(self, direction: str, down: bool = False) -> None:
         """
         draw enemy on display
+        :param direction: set direction to 'left' or 'right'
+        :param down: enable move down by bool
         :return: None
         """
+        if direction == "left":
+            self.enemy_pos_x -= self.ENEMY_SPEED
+
+        if direction == "right":
+            self.enemy_pos_x += self.ENEMY_SPEED
+
+        if down:
+            self.enemy_pos_y += self.ENEMY_SPEED * 2
+
         self._display.set_pen(WHITE)
 
         for y, row in enumerate(self._icon):
@@ -140,6 +151,22 @@ class Gun:
                     self._display.pixel(x + self.gun_pos_x, y + self.gun_pos_y)
 
 
+def reset_enemies() -> None:
+    """
+    resets the enemies
+    :return: None
+    """
+    global enemies
+
+    enemy_add = 15
+    enemy_start = 100
+
+    for _ in range(8):
+        enemy_item = Enemy(screen=display, x=enemy_start, y=20)
+        enemies.append(enemy_item)
+        enemy_start += enemy_add
+
+
 def collision_check(point: list, rectangle: list) -> bool:
     """
     check whether a point is inside a rectangular
@@ -179,12 +206,8 @@ gun_icon = [
 interface = Interface(screen=display, icon=gun_icon)
 
 enemies = []
-enemy_add = 15
-enemy_start = 100
-for _ in range(8):
-    enemy = Enemy(screen=display, x=enemy_start, y=20)
-    enemies.append(enemy)
-    enemy_start += enemy_add
+direction_x = "right"
+reset_enemies()
 
 gun = Gun(screen=display, icon=gun_icon, x=SCREEN_WIDTH // 2, y=SCREEN_HEIGHT - 10)
 
@@ -194,17 +217,28 @@ while True:
 
     interface.draw()
 
-    # @ToDo: move enemies
+    if not enemies:
+        reset_enemies()
+        interface.score += 10
+
+    if enemies[0].enemy_pos_x < 5:
+        direction_x = "right"
+
+    if enemies[-1].enemy_pos_x > SCREEN_WIDTH - 16:
+        direction_x = "left"
+        direction_y = True
+    else:
+        direction_y = False
 
     for enemy in enemies:
-        enemy.draw()
-
         if gun.bullet_state == "fire":
             if collision_check(point=[gun.bullet_pos_x, gun.bullet_pos_y],
                                rectangle=[enemy.enemy_pos_x, enemy.enemy_pos_y]):
                 interface.score += 1
                 enemies.remove(enemy)
                 gun.bullet_state = "ready"
+
+        enemy.draw(direction=direction_x, down=direction_y)
 
     # @ToDo: enemy shoot
 
