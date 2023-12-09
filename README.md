@@ -10,16 +10,16 @@ If you start the first time have a look on this [website](https://learn.pimoroni
 - 1x PicoVision (_[Pimoroni Shop](https://shop.pimoroni.com/products/picovision)_)
 - 1x HDMI cable
 - 1x Monitor
-- 1x USB cable (_USB A or USB C to Micro USB_)
+- 1x USB cable (_USB-A or USB-C to Micro-USB_)
 - optional speaker (_3.5mm stereo jack_)
 
 ## Prepare local environment
 
 ```shell
-# clone project from GitHub
+# clone project to local from GitHub
 $ git clone https://github.com/Lupin3000/PicoVision.git
 
-# change directory
+# change into git directory
 $ cd PicoVision
 
 # create virtual environment
@@ -41,16 +41,16 @@ $ source venv/bin/activate
 (venv) $ ls -la /dev/cu.usb*
 crw-rw-rw-  1 root  wheel  0x9000005 Nov 25 10:17 /dev/cu.usbmodem14301
 
-# create backup directory
+# create local backup directory
 (venv) $ mkdir examples
 
-# list all files and folders on device
+# list all files and folders on device (optional)
 (venv) $ rshell -p /dev/cu.usbmodem14301 ls /pyboard/
 
-# copy examples from device to local directory
+# copy examples from device to local backup directory
 (venv) $ rshell -p /dev/cu.usbmodem14301 cp -r /pyboard/* examples/
 
-# remove all files and directories
+# remove all files and directories on device
 (venv) $ rshell -p /dev/cu.usbmodem14301 rm -r /pyboard/*
 
 # copy main.py back to device
