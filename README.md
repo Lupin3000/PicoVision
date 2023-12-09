@@ -56,9 +56,12 @@ crw-rw-rw-  1 root  wheel  0x9000005 Nov 25 10:17 /dev/cu.usbmodem14301
 
 # copy main.py back to device
 (venv) $ rshell -p /dev/cu.usbmodem14301 cp examples/main.py /pyboard/
+
+# copy toaster.png back to device
+(venv) $ rshell -p /dev/cu.usbmodem14301 cp examples/toaster.png /pyboard/
 ```
 
-## Upload games
+## Upload all games
 
 > Upload all local files to PicoVision device. After successful upload you can press the PicoVision `RESET` button.
 
