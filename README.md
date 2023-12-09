@@ -4,45 +4,55 @@
 
 [Pimoroni/PicoVision](https://github.com/pimoroni/picovision#introduction)
 
-## Install requirements
+## Prepare local environment
 
 ```shell
+# clone project from GitHub
+$ git clone https://github.com/Lupin3000/PicoVision.git
+
+# change directory
+$ cd PicoVision
+
+# create virtual environment
+$ python3 -m venv ./venv
+
+# activate virtualenv
+$ source venv/bin/activate
+
 # install requirements
-$ pip install -r requirements.txt
+(venv) $ pip install -r requirements.txt
 ```
 
 ## Prepare PicoVision
 
-> Backup all Pimoroni examples to local project directory and delete them on device.
+> Backup all Pimoroni examples to local project directory `examples` and delete them on PicoVision device.
 
 ```shell
 # verify device connected
-$ ls -la /dev/cu.usb*
+(venv) $ ls -la /dev/cu.usb*
 crw-rw-rw-  1 root  wheel  0x9000005 Nov 25 10:17 /dev/cu.usbmodem14301
 
 # create backup directory
-$ mkdir examples
+(venv) $ mkdir examples
 
 # list all files and folders on device
-$ rshell -p /dev/cu.usbmodem14301 ls /pyboard/
+(venv) $ rshell -p /dev/cu.usbmodem14301 ls /pyboard/
 
 # copy examples from device to local directory
-$ rshell -p /dev/cu.usbmodem14301 cp -r /pyboard/* examples/
+(venv) $ rshell -p /dev/cu.usbmodem14301 cp -r /pyboard/* examples/
 
 # remove all files and directories
-$ rshell -p /dev/cu.usbmodem14301 rm -r /pyboard/*
+(venv) $ rshell -p /dev/cu.usbmodem14301 rm -r /pyboard/*
 
 # copy main.py back to device
-$ rshell -p /dev/cu.usbmodem14301 cp examples/main.py /pyboard/
+(venv) $ rshell -p /dev/cu.usbmodem14301 cp examples/main.py /pyboard/
 ```
 
 ## Upload games
 
-> Upload all local files to device. After successful upload you can press the PicoVision `RESET` button.
+> Upload all local files to PicoVision device. After successful upload you can press the PicoVision `RESET` button.
 
 ```shell
 # upload specific file
-$ rshell -p /dev/cu.usbmodem14301 cp *.py /pyboard/
+(venv) $ rshell -p /dev/cu.usbmodem14301 cp *.py /pyboard/
 ```
-
-
