@@ -1,3 +1,9 @@
 venv
 .idea
 /examples/
+
+*.log
+*.pyc
+*.so
+*.manifest
+*.spec
