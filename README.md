@@ -7,6 +7,7 @@ If you start the first time have a look on this [website](https://learn.pimoroni
 ## Requirements
 
 - Python 3.x installed
+- latest [VCP](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads) driver installed
 - 1x PicoVision (_[Pimoroni Shop](https://shop.pimoroni.com/products/picovision)_)
 - 1x HDMI cable
 - 1x Monitor
