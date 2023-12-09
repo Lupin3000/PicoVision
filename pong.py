@@ -5,7 +5,6 @@ from urandom import randrange
 
 SCREEN_WIDTH = const(320)
 SCREEN_HEIGHT = const(240)
-PADDLE_SPEED = const(5)
 COLLISION_TOLERANCE = const(5)
 
 
@@ -26,12 +25,13 @@ class Field:
         self._display.set_pen(WHITE)
         self._display.text(f'Fails {fails}', 25, 15, scale=1)
         self._display.line(25, 25, SCREEN_WIDTH - 25, 25)
-        self._display.line(25, 25, 25, SCREEN_HEIGHT - 25)
         self._display.line(SCREEN_WIDTH - 25, 25, SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25)
         self._display.line(25, SCREEN_HEIGHT - 25, SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25)
 
 
 class Paddle:
+    PADDLE_SPEED = const(5)
+
     def __init__(self, screen):
         """
         paddle constructor
@@ -52,10 +52,10 @@ class Paddle:
         button_down = self._display.is_button_x_pressed
 
         if button_up() and self.pos_y > 30:
-            self.pos_y -= PADDLE_SPEED
+            self.pos_y -= self.PADDLE_SPEED
 
         if button_down() and self.pos_y < (SCREEN_HEIGHT - self.height - 30):
-            self.pos_y += PADDLE_SPEED
+            self.pos_y += self.PADDLE_SPEED
 
         self._display.set_pen(RED)
         self._display.rectangle(self.pos_x, self.pos_y, self.width, self.height)
@@ -69,6 +69,16 @@ class Ball:
         """
         self._display = screen
         self.radius = 5
+        self.pos_x = None
+        self.pos_y = None
+        self.speed_x = None
+        self.speed_y = None
+
+    def reset(self) -> None:
+        """
+        reset ball position and direction
+        :return: None
+        """
         self.pos_x = SCREEN_WIDTH // 2
         self.pos_y = SCREEN_HEIGHT // 2
         self.speed_x = -1 if randrange(2) else 1
@@ -115,6 +125,7 @@ ball_lost = 0
 field = Field(screen=display)
 paddle = Paddle(screen=display)
 ball = Ball(screen=display)
+ball.reset()
 
 while True:
     display.set_pen(BLACK)
@@ -136,6 +147,7 @@ while True:
 
     if ball.pos_x - ball.radius < 25:
         ball_lost += 1
+        ball.reset()
 
     ball.draw()
 

@@ -11,33 +11,38 @@
 $ pip install -r requirements.txt
 ```
 
-## Serial connection
+## Prepare PicoVision
+
+> Backup all Pimoroni examples to local project directory and delete them on device.
 
 ```shell
 # verify device connected
 $ ls -la /dev/cu.usb*
 crw-rw-rw-  1 root  wheel  0x9000005 Nov 25 10:17 /dev/cu.usbmodem14301
 
-# start rshell connection
-$ rshell -p /dev/cu.usbmodem14301
-```
+# create backup directory
+$ mkdir examples
 
-## Explore device
-
-```shell
 # list all files and folders on device
-PicoVision> ls /pyboard/
+$ rshell -p /dev/cu.usbmodem14301 ls /pyboard/
 
-# start REPL
-PicoVision> repl
+# copy examples from device to local directory
+$ rshell -p /dev/cu.usbmodem14301 cp -r /pyboard/* examples/
 
-# list available modules
->>> help('modules')
+# remove all files and directories
+$ rshell -p /dev/cu.usbmodem14301 rm -r /pyboard/*
+
+# copy main.py back to device
+$ rshell -p /dev/cu.usbmodem14301 cp examples/main.py /pyboard/
 ```
 
-## Upload files
+## Upload games
+
+> Upload all local files to device. After successful upload you can press the PicoVision `RESET` button.
 
 ```shell
 # upload specific file
-$ rshell -p /dev/cu.usbmodem14301 cp pong.py /pyboard/pong.py
+$ rshell -p /dev/cu.usbmodem14301 cp *.py /pyboard/
 ```
+
+
