@@ -159,12 +159,13 @@ def reset_enemies() -> None:
     global enemies
 
     enemy_add = 15
-    enemy_start = 100
+    enemy_start_x = 100
+    enemy_start_y = 20
 
     for _ in range(8):
-        enemy_item = Enemy(screen=display, x=enemy_start, y=20)
+        enemy_item = Enemy(screen=display, x=enemy_start_x, y=enemy_start_y)
         enemies.append(enemy_item)
-        enemy_start += enemy_add
+        enemy_start_x += enemy_add
 
 
 def collision_check(point: list, rectangle: list) -> bool:
@@ -215,6 +216,9 @@ while True:
     display.set_pen(BLACK)
     display.clear()
 
+    if interface.lives <= 0:
+        break
+
     interface.draw()
 
     if not enemies:
@@ -238,6 +242,11 @@ while True:
                 enemies.remove(enemy)
                 gun.bullet_state = "ready"
 
+        if enemy.enemy_pos_y > SCREEN_HEIGHT - 20:
+            enemies.clear()
+            interface.lives -= 1
+            reset_enemies()
+
         enemy.draw(direction=direction_x, down=direction_y)
 
     # @ToDo: enemy shoot
@@ -247,3 +256,9 @@ while True:
     gun.handle_input()
 
     display.update()
+
+# game over
+display.set_pen(WHITE)
+display.text('Game Over', 75, 80, scale=3)
+display.text(f'Score {interface.score}', 100, 120, scale=1)
+display.update()
