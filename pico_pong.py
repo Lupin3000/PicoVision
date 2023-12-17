@@ -1,6 +1,7 @@
 from micropython import const
 from picovision import PicoVision, PEN_RGB555
 from urandom import randrange
+import gc
 
 
 SCREEN_WIDTH = const(320)
@@ -19,7 +20,7 @@ class Field:
     def draw(self, fails: int = 0) -> None:
         """
         draw game field on display
-        :param fails: integer for fails
+        :param fails: number as integer for player fails
         :return: None
         """
         self._display.set_pen(WHITE)
@@ -113,20 +114,24 @@ def check_collision(circle: list, rectangle: list) -> bool:
     return distance <= (circle_radius + COLLISION_TOLERANCE)
 
 
+# initialize display
 display = PicoVision(PEN_RGB555, SCREEN_WIDTH, SCREEN_HEIGHT)
 display.set_font("bitmap8")
 
+# define colors
 BLACK = display.create_pen(0, 0, 0)
 WHITE = display.create_pen(255, 255, 255)
 RED = display.create_pen(255, 0, 0)
 BLUE = display.create_pen(0, 0, 255)
 
+# define important variables and create objects
 ball_lost = 0
 field = Field(screen=display)
 paddle = Paddle(screen=display)
 ball = Ball(screen=display)
 ball.reset()
 
+# game loop
 while True:
     display.set_pen(BLACK)
     display.clear()
@@ -152,3 +157,4 @@ while True:
     ball.draw()
 
     display.update()
+    gc.collect()

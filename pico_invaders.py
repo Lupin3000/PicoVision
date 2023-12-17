@@ -191,14 +191,17 @@ def collision_check(point: list, rectangle: list) -> bool:
     return False
 
 
+# initialize display
 display = PicoVision(PEN_RGB555, SCREEN_WIDTH, SCREEN_HEIGHT)
 display.set_font("bitmap8")
 
+# define colors
 BLACK = display.create_pen(0, 0, 0)
 WHITE = display.create_pen(255, 255, 255)
 BLUE = display.create_pen(0, 0, 255)
 YELLOW = display.create_pen(255, 255, 0)
 
+# define important variables and create objects
 gun_icon = [
     [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
@@ -216,6 +219,7 @@ reset_enemies()
 
 gun = Gun(screen=display, icon=gun_icon, x=SCREEN_WIDTH // 2, y=SCREEN_HEIGHT - 10)
 
+# game loop
 while True:
     display.set_pen(BLACK)
     display.clear()
@@ -251,10 +255,6 @@ while True:
             reset_enemies()
 
         enemy.draw(direction=direction_x, down=direction_y)
-
-    # @ToDo: enemy shoot
-
-    # @ToDo: buildings
 
     gun.handle_input()
 

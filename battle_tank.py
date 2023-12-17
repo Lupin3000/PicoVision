@@ -106,18 +106,22 @@ class Tank:
         self._draw_tank()
 
 
+# initialize display
 display = PicoVision(PEN_RGB555, SCREEN_WIDTH, SCREEN_HEIGHT)
 display.set_font("bitmap8")
 
+# define colors
 SKY = display.create_pen(165, 182, 209)
 GROUND = display.create_pen(9, 84, 5)
 TANK = display.create_pen(150, 150, 150)
 GUN = display.create_pen(100, 100, 100)
 BULLET = display.create_pen(0, 0, 0)
 
+# define important variables and create objects
 ground = [0, int(SCREEN_HEIGHT // 1.05), SCREEN_WIDTH, SCREEN_HEIGHT]
 tank = Tank(screen=display, center_x=50, center_y=ground[1])
 
+# game loop
 while True:
     display.set_pen(SKY)
     display.clear()
