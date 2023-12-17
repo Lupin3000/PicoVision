@@ -1,10 +1,8 @@
 # PicoVision
 
-## PicoVision repository
-
-If you start the first time have a look on this [website](https://learn.pimoroni.com/article/getting-started-with-picovision)! The original firmware and examples are available on [GitHub](https://github.com/pimoroni/picovision#introduction).
-
 ## Requirements
+
+> If you start the first time have a look on this [website](https://learn.pimoroni.com/article/getting-started-with-picovision)! The original firmware and examples are available on [GitHub](https://github.com/pimoroni/picovision#introduction).
 
 - Python 3.x installed
 - latest [VCP](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads) driver installed
@@ -14,7 +12,11 @@ If you start the first time have a look on this [website](https://learn.pimoroni
 - 1x USB cable (_USB-A or USB-C to Micro-USB_)
 - optional speaker (_3.5mm stereo jack_)
 
-## Prepare local environment
+## Prepare local project and MicroPython environment
+
+Download project from GitHub to your local device, create a Python virtual environment and install all needed Python libraries on your local device.
+
+> The described usage of Python virtual environment is recommended but not mandatory!
 
 ```shell
 # clone project to local from GitHub
@@ -33,9 +35,11 @@ $ source venv/bin/activate
 (venv) $ pip install -r requirements.txt
 ```
 
-## Prepare PicoVision
+## Prepare the PicoVision device
 
-> Backup all Pimoroni examples to local project directory `examples` and delete them on PicoVision device.
+Backup all Pimoroni examples to local project directory `examples` and delete them on PicoVision device to save some storage.
+
+> The serial device interface example `usbmodem14301` could be named different on you system (_depending to USB port_)!
 
 ```shell
 # verify device connected
@@ -61,9 +65,11 @@ crw-rw-rw-  1 root  wheel  0x9000005 Nov 25 10:17 /dev/cu.usbmodem14301
 (venv) $ rshell -p /dev/cu.usbmodem14301 cp examples/toaster.png /pyboard/
 ```
 
-## Upload all games
+## Upload games to PicoVision
 
-> Upload all local files to PicoVision device. After successful upload you can press the PicoVision `RESET` button.
+Upload local files and folders to PicoVision device. After successful upload you can press the PicoVision `RESET` button.
+
+> After the upload and first tests, you can delete the games you don't like.
 
 ```shell
 # upload specific file
