@@ -13,7 +13,7 @@ class Building:
 
     ROOF = const(5)
     FOUNDATION = const(10)
-    WINDOW_HEIGHT = const(10)
+    WINDOW = const(10)
 
     def __init__(self, screen, x: int, y: int, w: int, h: int, r: bool = False, s: bool = False, f: bool = False):
         """
@@ -21,8 +21,8 @@ class Building:
         :param screen: display
         :param x: x position of the building as integer
         :param y: y position of the building as integer
-        :param w: width of the building as integer
-        :param h: height of the building as integer
+        :param w: width of the building as integer (minimum 30px, maximum 80px)
+        :param h: height of the building as integer (minimum 60px, maximum 100px)
         :param r: boolean to indicate roof for building (default: False)
         :param s: boolean to indicate line or single windows (default: False)
         :param f: boolean to indicate building foundation (default: False)
@@ -30,8 +30,17 @@ class Building:
         self._display = screen
         self._pos_x = int(x)
         self._pos_y = int(y)
-        self._width = int(w)
-        self._height = int(h)
+
+        if 30 < int(w) > 80:
+            self._width = 50
+        else:
+            self._width = int(w)
+
+        if 60 < int(h) > 100:
+            self._height = 80
+        else:
+            self._height = int(h)
+
         self._roof = bool(r)
         self._single = bool(s)
         self._foundation = bool(f)
@@ -57,25 +66,31 @@ class Building:
             self._display.rectangle(foundation_pos_x, foundation_pos_y, foundation_width, self.FOUNDATION)
 
         self._display.set_pen(WINDOWS)
-        x = self._pos_x + 5
-        y = self._pos_y + 10
-        w = self._width - 10
-        h = self.WINDOW_HEIGHT
+        x = self._pos_x + (self.WINDOW // 2)
+        y = self._pos_y + self.WINDOW
+        w = self._width - self.WINDOW
+        h = self.WINDOW
 
         for _ in range(6):
             self._display.rectangle(x, y, w, h)
             y += 15
 
+            if y > self._pos_y + self._height - self.WINDOW:
+                break
+
         if self._single:
             self._display.set_pen(BUILDING)
-            x1 = x2 = self._pos_x
+            x1 = x2 = self._pos_x + (self.WINDOW // 2) + 4
             y1 = self._pos_y
             y2 = self._pos_y + self._height
 
-            for _ in range(10):
-                self._display.line(x1, y1, x2, y2, 2)
+            for _ in range(13):
+                self._display.line(x1, y1, x2, y2, 1)
                 x1 += 5
                 x2 = x1
+
+                if x1 > self._pos_x + self._width - 5:
+                    break
 
 
 class Tank:
@@ -190,8 +205,10 @@ BULLET = display.create_pen(0, 0, 0)
 
 # define important variables and create objects
 ground = [0, int(SCREEN_HEIGHT // 1.05), SCREEN_WIDTH, SCREEN_HEIGHT]
-building_a = Building(screen=display, x=100, y=128, w=50, h=100, r=True, s=True, f=True)
-building_b = Building(screen=display, x=200, y=128, w=50, h=100)
+
+building_a = Building(screen=display, x=100, y=128, w=50, h=100, r=True, s=True)
+building_b = Building(screen=display, x=200, y=128, w=40, h=100, f=True)
+
 tank = Tank(screen=display, center_x=50, center_y=ground[1])
 
 # game loop
