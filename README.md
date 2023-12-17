@@ -39,7 +39,7 @@ $ source venv/bin/activate
 
 Backup all Pimoroni examples to local project directory `examples` and delete them on PicoVision device to save some storage.
 
-> The serial device interface example `usbmodem14301` could be named different on you system (_depending to your OS and USB port_)!
+> The serial device interface example `usbmodem14301` could be named different on you system (_depending on your OS and USB port_)!
 
 ```shell
 # verify device connected
@@ -75,3 +75,12 @@ Upload local files and folders to PicoVision device. After the successful upload
 # upload specific file
 (venv) $ rshell -p /dev/cu.usbmodem14301 cp *.py /pyboard/
 ```
+
+## Participate the project
+
+You are very welcome to take part in this project! No matter whether you want to develop new games or expand / optimize existing games. There are very few rules:
+
+- Games must be developed in MicroPython
+- No insults are allowed
+- The code should be at least somewhat documented (_e.g. DocStrings_)
+- Anyone who destroys something has to fix it again
