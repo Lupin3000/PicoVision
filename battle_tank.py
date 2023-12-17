@@ -9,6 +9,75 @@ SCREEN_WIDTH = const(320)
 SCREEN_HEIGHT = const(240)
 
 
+class Building:
+
+    ROOF = const(5)
+    FOUNDATION = const(10)
+    WINDOW_HEIGHT = const(10)
+
+    def __init__(self, screen, x: int, y: int, w: int, h: int, r: bool = False, s: bool = False, f: bool = False):
+        """
+        building constructor
+        :param screen: display
+        :param x: x position of the building as integer
+        :param y: y position of the building as integer
+        :param w: width of the building as integer
+        :param h: height of the building as integer
+        :param r: boolean to indicate roof for building (default: False)
+        :param s: boolean to indicate line or single windows (default: False)
+        :param f: boolean to indicate building foundation (default: False)
+        """
+        self._display = screen
+        self._pos_x = int(x)
+        self._pos_y = int(y)
+        self._width = int(w)
+        self._height = int(h)
+        self._roof = bool(r)
+        self._single = bool(s)
+        self._foundation = bool(f)
+
+    def draw_building(self) -> None:
+        """
+        draw building on screen
+        :return: None
+        """
+        self._display.set_pen(BUILDING)
+        self._display.rectangle(self._pos_x, self._pos_y, self._width, self._height)
+
+        if self._roof:
+            roof_pos_x = self._pos_x + (self.ROOF * 2)
+            roof_pos_y = self._pos_y - self.ROOF
+            roof_width = self._width - (self.ROOF * 4)
+            self._display.rectangle(roof_pos_x, roof_pos_y, roof_width, self.ROOF)
+
+        if self._foundation:
+            foundation_pos_x = self._pos_x - (self.FOUNDATION // 2)
+            foundation_pos_y = self._pos_y + self._height - self.FOUNDATION
+            foundation_width = self._width + self.FOUNDATION
+            self._display.rectangle(foundation_pos_x, foundation_pos_y, foundation_width, self.FOUNDATION)
+
+        self._display.set_pen(WINDOWS)
+        x = self._pos_x + 5
+        y = self._pos_y + 10
+        w = self._width - 10
+        h = self.WINDOW_HEIGHT
+
+        for _ in range(6):
+            self._display.rectangle(x, y, w, h)
+            y += 15
+
+        if self._single:
+            self._display.set_pen(BUILDING)
+            x1 = x2 = self._pos_x
+            y1 = self._pos_y
+            y2 = self._pos_y + self._height
+
+            for _ in range(10):
+                self._display.line(x1, y1, x2, y2, 2)
+                x1 += 5
+                x2 = x1
+
+
 class Tank:
 
     GUN_ROTATION_SPEED = const(2)
@@ -83,7 +152,7 @@ class Tank:
 
     def handle_player_input(self) -> None:
         """
-        handle player input by buttons to move gun and to shoot the bullet
+        handle player input by buttons to move gun and to shoot the bullet (incl rotation restriction)
         :return: None
         """
         button_up = self._display.is_button_a_pressed
@@ -113,12 +182,16 @@ display.set_font("bitmap8")
 # define colors
 SKY = display.create_pen(165, 182, 209)
 GROUND = display.create_pen(9, 84, 5)
+BUILDING = display.create_pen(45, 45, 45)
+WINDOWS = display.create_pen(50, 250, 25)
 TANK = display.create_pen(150, 150, 150)
 GUN = display.create_pen(100, 100, 100)
 BULLET = display.create_pen(0, 0, 0)
 
 # define important variables and create objects
 ground = [0, int(SCREEN_HEIGHT // 1.05), SCREEN_WIDTH, SCREEN_HEIGHT]
+building_a = Building(screen=display, x=100, y=128, w=50, h=100, r=True, s=True, f=True)
+building_b = Building(screen=display, x=200, y=128, w=50, h=100)
 tank = Tank(screen=display, center_x=50, center_y=ground[1])
 
 # game loop
@@ -128,6 +201,9 @@ while True:
 
     display.set_pen(GROUND)
     display.rectangle(ground[0], ground[1], ground[2], ground[3])
+
+    building_a.draw_building()
+    building_b.draw_building()
 
     tank.handle_player_input()
 
