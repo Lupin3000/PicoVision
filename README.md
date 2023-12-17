@@ -2,7 +2,7 @@
 
 ## Requirements
 
-> If you start the first time have a look on this [website](https://learn.pimoroni.com/article/getting-started-with-picovision)! The original firmware and examples are available on [GitHub](https://github.com/pimoroni/picovision#introduction).
+> If you start the first time have a look on this [website](https://learn.pimoroni.com/article/getting-started-with-picovision)! The original MicroPython firmware and examples (_from Pimoroni_) are available on [GitHub](https://github.com/pimoroni/picovision#introduction).
 
 - Python 3.x installed
 - latest [VCP](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads) driver installed
@@ -39,7 +39,7 @@ $ source venv/bin/activate
 
 Backup all Pimoroni examples to local project directory `examples` and delete them on PicoVision device to save some storage.
 
-> The serial device interface example `usbmodem14301` could be named different on you system (_depending to USB port_)!
+> The serial device interface example `usbmodem14301` could be named different on you system (_depending to your OS and USB port_)!
 
 ```shell
 # verify device connected
@@ -67,7 +67,7 @@ crw-rw-rw-  1 root  wheel  0x9000005 Nov 25 10:17 /dev/cu.usbmodem14301
 
 ## Upload games to PicoVision
 
-Upload local files and folders to PicoVision device. After successful upload you can press the PicoVision `RESET` button.
+Upload local files and folders to PicoVision device. After the successful upload, you can press the PicoVision `RESET` button to restart the device.
 
 > After the upload and first tests, you can delete the games you don't like.
 
