@@ -2,8 +2,9 @@
 
 ## Overview of games
 
-- Pico Pong
-- Pico Invaders
+- [Pico Pong](pico_pong.py) ready for improvements
+- [Pico Invaders](pico_invaders.py) ready for improvements
+- [Battle Tank](battle_tank.py) in development
 
 ## Requirements
 
