@@ -90,3 +90,4 @@ You are very welcome to take part in this project! No matter whether you want to
 - No insults are allowed
 - The code should be at least somewhat documented (_e.g. DocStrings_)
 - Anyone who destroys something has to fix it again
+- Do not upload Pimoroni examples
