@@ -45,26 +45,31 @@ class Building:
         self._single = bool(s)
         self._foundation = bool(f)
 
-    def draw_building(self) -> None:
+    def _add_roof(self) -> None:
         """
-        draw building on screen
+        draw building roof on display
         :return: None
         """
-        self._display.set_pen(BUILDING)
-        self._display.rectangle(self._pos_x, self._pos_y, self._width, self._height)
+        roof_pos_x = self._pos_x + (self.ROOF * 2)
+        roof_pos_y = self._pos_y - self.ROOF
+        roof_width = self._width - (self.ROOF * 4)
+        self._display.rectangle(roof_pos_x, roof_pos_y, roof_width, self.ROOF)
 
-        if self._roof:
-            roof_pos_x = self._pos_x + (self.ROOF * 2)
-            roof_pos_y = self._pos_y - self.ROOF
-            roof_width = self._width - (self.ROOF * 4)
-            self._display.rectangle(roof_pos_x, roof_pos_y, roof_width, self.ROOF)
+    def _add_foundation(self) -> None:
+        """
+        draw building foundation on display
+        :return: None
+        """
+        foundation_pos_x = self._pos_x - (self.FOUNDATION // 2)
+        foundation_pos_y = self._pos_y + self._height - self.FOUNDATION
+        foundation_width = self._width + self.FOUNDATION
+        self._display.rectangle(foundation_pos_x, foundation_pos_y, foundation_width, self.FOUNDATION)
 
-        if self._foundation:
-            foundation_pos_x = self._pos_x - (self.FOUNDATION // 2)
-            foundation_pos_y = self._pos_y + self._height - self.FOUNDATION
-            foundation_width = self._width + self.FOUNDATION
-            self._display.rectangle(foundation_pos_x, foundation_pos_y, foundation_width, self.FOUNDATION)
-
+    def _add_windows(self) -> None:
+        """
+        draw building windows on display
+        :return: None
+        """
         self._display.set_pen(WINDOWS)
         x = self._pos_x + (self.WINDOW // 2)
         y = self._pos_y + self.WINDOW
@@ -91,6 +96,22 @@ class Building:
 
                 if x1 > self._pos_x + self._width - 5:
                     break
+
+    def draw_building(self) -> None:
+        """
+        draw building on screen
+        :return: None
+        """
+        self._display.set_pen(BUILDING)
+        self._display.rectangle(self._pos_x, self._pos_y, self._width, self._height)
+
+        if self._roof:
+            self._add_roof()
+
+        if self._foundation:
+            self._add_foundation()
+
+        self._add_windows()
 
 
 class Tank:
