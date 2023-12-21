@@ -7,6 +7,8 @@ import gc
 
 SCREEN_WIDTH = const(320)
 SCREEN_HEIGHT = const(240)
+GROUND_X = const(0)
+GROUND_Y = const(228)
 
 
 class Information:
@@ -237,6 +239,18 @@ class Tank:
         self._draw_tank()
 
 
+class Enemy:
+    def __init__(self, screen):
+        """
+        information constructor
+        :param screen: displayed screen
+        """
+        self._display = screen
+
+    def draw_enemy(self):
+        pass
+
+
 # initialize display
 display = PicoVision(PEN_RGB555, SCREEN_WIDTH, SCREEN_HEIGHT)
 display.set_font("bitmap8")
@@ -252,14 +266,11 @@ GUN = display.create_pen(100, 100, 100)
 BULLET = display.create_pen(0, 0, 0)
 
 # define important variables and create objects
-ground = [0, int(SCREEN_HEIGHT // 1.05), SCREEN_WIDTH, SCREEN_HEIGHT]
-
+ground = [GROUND_X, GROUND_Y, SCREEN_WIDTH, SCREEN_HEIGHT]
 game_info = Information(screen=display)
-
 building_a = Building(screen=display, x=35, y=138, w=50, h=90, r=True, s=True)
 building_b = Building(screen=display, x=140, y=128, w=40, h=100, f=True)
 building_c = Building(screen=display, x=200, y=148, w=40, h=80, s=True)
-
 tank = Tank(screen=display, center_x=100, center_y=ground[1])
 
 # game loop
