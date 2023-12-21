@@ -266,12 +266,11 @@ GUN = display.create_pen(100, 100, 100)
 BULLET = display.create_pen(0, 0, 0)
 
 # define important variables and create objects
-ground = [GROUND_X, GROUND_Y, SCREEN_WIDTH, SCREEN_HEIGHT]
 game_info = Information(screen=display)
 building_a = Building(screen=display, x=35, y=138, w=50, h=90, r=True, s=True)
 building_b = Building(screen=display, x=140, y=128, w=40, h=100, f=True)
 building_c = Building(screen=display, x=200, y=148, w=40, h=80, s=True)
-tank = Tank(screen=display, center_x=100, center_y=ground[1])
+tank = Tank(screen=display, center_x=100, center_y=GROUND_Y)
 
 # game loop
 while True:
@@ -282,7 +281,7 @@ while True:
         break
 
     display.set_pen(GROUND)
-    display.rectangle(ground[0], ground[1], ground[2], ground[3])
+    display.rectangle(GROUND_X, GROUND_Y, SCREEN_WIDTH, SCREEN_HEIGHT)
 
     game_info.draw_information()
 
