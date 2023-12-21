@@ -12,6 +12,7 @@ SCREEN_HEIGHT = const(240)
 class Information:
 
     FONT_SCALE = const(1)
+    DESIRED_WIDTH = const(4)
 
     def __init__(self, screen):
         """
@@ -29,9 +30,9 @@ class Information:
         :return: None
         """
         self._display.set_pen(INFORMATION)
-        self._display.text(f'Level: {self.level}', 10, 10, scale=self.FONT_SCALE)
-        self._display.text(f'Lives: {self.lives}', 120, 10, scale=self.FONT_SCALE)
-        self._display.text(f'Score: {self.score}', 230, 10, scale=self.FONT_SCALE)
+        self._display.text(f'Level: {self.level:0>{self.DESIRED_WIDTH}}', 20, 10, scale=self.FONT_SCALE)
+        self._display.text(f'Lives: {self.lives:0>{self.DESIRED_WIDTH}}', 130, 10, scale=self.FONT_SCALE)
+        self._display.text(f'Score: {self.score:0>{self.DESIRED_WIDTH}}', 250, 10, scale=self.FONT_SCALE)
 
 
 class Building:
