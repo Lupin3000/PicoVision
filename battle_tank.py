@@ -26,7 +26,7 @@ class Information:
         self.lives = 3
         self.score = 0
 
-    def draw_information(self) -> None:
+    def draw(self) -> None:
         """
         draw information on the display
         :return: None
@@ -125,9 +125,9 @@ class Building:
                 if x1 > self._pos_x + self._width - 5:
                     break
 
-    def draw_building(self) -> None:
+    def draw(self) -> None:
         """
-        draw building on screen
+        draw building on display
         :return: None
         """
         self._display.set_pen(BUILDING)
@@ -157,7 +157,7 @@ class Tank:
         """
         self._display = screen
         self._tank_center_x = int(center_x)
-        self._tank_center_y = int(center_y - 6)
+        self._tank_center_y = int(center_y) - 6
         self._gun_angle = -45
         self._bullet_state = "ready"
         self._bullet_angle = None
@@ -240,15 +240,33 @@ class Tank:
 
 
 class Enemy:
-    def __init__(self, screen):
+
+    def __init__(self, screen, level: int):
         """
-        information constructor
+        enemy constructor
         :param screen: displayed screen
+        :param level: level of the enemy (Minimum: 1, Maximum: 3)
         """
         self._display = screen
+        self._visible = False
+        self._beam = False
 
-    def draw_enemy(self):
-        pass
+        if 0 <= int(level) <= 3:
+            self._level = 1
+        self._level = int(level)
+
+    def draw(self) -> None:
+        """
+        draw enemy and/or beam on the display
+        :return: None
+        """
+        if self._visible:
+            # @ToDo: draw enemy icon
+            pass
+
+        if self._beam:
+            # @ToDo: draw enemy beam
+            pass
 
 
 # initialize display
@@ -267,10 +285,16 @@ BULLET = display.create_pen(0, 0, 0)
 
 # define important variables and create objects
 game_info = Information(screen=display)
+
 building_a = Building(screen=display, x=35, y=(GROUND_Y - 90), w=50, h=90, r=True, s=True)
 building_b = Building(screen=display, x=140, y=(GROUND_Y - 100), w=40, h=100, f=True)
 building_c = Building(screen=display, x=200, y=(GROUND_Y - 80), w=40, h=80, s=True)
+
 tank = Tank(screen=display, center_x=100, center_y=GROUND_Y)
+
+enemy_a = Enemy(screen=display, level=1)
+enemy_b = Enemy(screen=display, level=2)
+enemy_c = Enemy(screen=display, level=3)
 
 # game loop
 while True:
@@ -283,11 +307,15 @@ while True:
     display.set_pen(GROUND)
     display.rectangle(GROUND_X, GROUND_Y, SCREEN_WIDTH, SCREEN_HEIGHT)
 
-    game_info.draw_information()
+    game_info.draw()
 
-    building_a.draw_building()
-    building_b.draw_building()
-    building_c.draw_building()
+    building_a.draw()
+    building_b.draw()
+    building_c.draw()
+
+    enemy_a.draw()
+    enemy_b.draw()
+    enemy_c.draw()
 
     tank.handle_player_input()
 
