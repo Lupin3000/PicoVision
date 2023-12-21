@@ -9,6 +9,31 @@ SCREEN_WIDTH = const(320)
 SCREEN_HEIGHT = const(240)
 
 
+class Information:
+
+    FONT_SCALE = const(1)
+
+    def __init__(self, screen):
+        """
+        information constructor
+        :param screen: displayed screen
+        """
+        self._display = screen
+        self.level = 1
+        self.lives = 3
+        self.score = 0
+
+    def draw_information(self) -> None:
+        """
+        draw information on the display
+        :return: None
+        """
+        self._display.set_pen(INFORMATION)
+        self._display.text(f'Level: {self.level}', 10, 10, scale=self.FONT_SCALE)
+        self._display.text(f'Lives: {self.lives}', 120, 10, scale=self.FONT_SCALE)
+        self._display.text(f'Score: {self.score}', 230, 10, scale=self.FONT_SCALE)
+
+
 class Building:
 
     ROOF = const(5)
@@ -18,7 +43,7 @@ class Building:
     def __init__(self, screen, x: int, y: int, w: int, h: int, r: bool = False, s: bool = False, f: bool = False):
         """
         building constructor
-        :param screen: display
+        :param screen: displayed screen
         :param x: x position of the building as integer
         :param y: y position of the building as integer
         :param w: width of the building as integer (minimum 30px, maximum 80px)
@@ -123,7 +148,7 @@ class Tank:
     def __init__(self, screen, center_x: int, center_y: int):
         """
         tank constructor
-        :param screen: display
+        :param screen: displayed screen
         :param center_x: tank center x position in pixel
         :param center_y: tank center y position in pixel
         """
@@ -218,6 +243,7 @@ display.set_font("bitmap8")
 # define colors
 SKY = display.create_pen(165, 182, 209)
 GROUND = display.create_pen(9, 84, 5)
+INFORMATION = display.create_pen(50, 50, 50)
 BUILDING = display.create_pen(45, 45, 45)
 WINDOWS = display.create_pen(50, 250, 25)
 TANK = display.create_pen(150, 150, 150)
@@ -227,10 +253,13 @@ BULLET = display.create_pen(0, 0, 0)
 # define important variables and create objects
 ground = [0, int(SCREEN_HEIGHT // 1.05), SCREEN_WIDTH, SCREEN_HEIGHT]
 
-building_a = Building(screen=display, x=100, y=128, w=50, h=100, r=True, s=True)
-building_b = Building(screen=display, x=200, y=128, w=40, h=100, f=True)
+game_info = Information(screen=display)
 
-tank = Tank(screen=display, center_x=50, center_y=ground[1])
+building_a = Building(screen=display, x=35, y=138, w=50, h=90, r=True, s=True)
+building_b = Building(screen=display, x=140, y=128, w=40, h=100, f=True)
+building_c = Building(screen=display, x=200, y=148, w=40, h=80, s=True)
+
+tank = Tank(screen=display, center_x=100, center_y=ground[1])
 
 # game loop
 while True:
@@ -240,8 +269,11 @@ while True:
     display.set_pen(GROUND)
     display.rectangle(ground[0], ground[1], ground[2], ground[3])
 
+    game_info.draw_information()
+
     building_a.draw_building()
     building_b.draw_building()
+    building_c.draw_building()
 
     tank.handle_player_input()
 
