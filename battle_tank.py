@@ -267,9 +267,9 @@ BULLET = display.create_pen(0, 0, 0)
 
 # define important variables and create objects
 game_info = Information(screen=display)
-building_a = Building(screen=display, x=35, y=138, w=50, h=90, r=True, s=True)
-building_b = Building(screen=display, x=140, y=128, w=40, h=100, f=True)
-building_c = Building(screen=display, x=200, y=148, w=40, h=80, s=True)
+building_a = Building(screen=display, x=35, y=(GROUND_Y - 90), w=50, h=90, r=True, s=True)
+building_b = Building(screen=display, x=140, y=(GROUND_Y - 100), w=40, h=100, f=True)
+building_c = Building(screen=display, x=200, y=(GROUND_Y - 80), w=40, h=80, s=True)
 tank = Tank(screen=display, center_x=100, center_y=GROUND_Y)
 
 # game loop
