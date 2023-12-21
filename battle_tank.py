@@ -278,6 +278,9 @@ while True:
     display.set_pen(SKY)
     display.clear()
 
+    if game_info.lives <= 0:
+        break
+
     display.set_pen(GROUND)
     display.rectangle(ground[0], ground[1], ground[2], ground[3])
 
@@ -291,3 +294,9 @@ while True:
 
     display.update()
     gc.collect()
+
+# game over
+display.set_pen(INFORMATION)
+display.text('Game Over', 75, 80, scale=3)
+display.text(f'Score: {game_info.score}', 100, 120, scale=1)
+display.update()
