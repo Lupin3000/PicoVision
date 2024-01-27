@@ -78,7 +78,7 @@ Upload local files and folders to PicoVision device. After the successful upload
 > After the upload and first tests, you can delete the games you don't like.
 
 ```shell
-# upload specific file
+# upload all Python files (example)
 (venv) $ rshell -p /dev/cu.usbmodem14301 cp *.py /pyboard/
 ```
 

@@ -1,6 +1,7 @@
 venv
 .idea
 /examples/
+.DS_Store
 
 *.log
 *.pyc
